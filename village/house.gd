@@ -1,0 +1,37 @@
+## A single tile/cell ("house") in the village grid.
+## Has:
+## * occupant = villager who 'lives' there - this is what the player controls,
+## 	placing the different villagers where they want them to start for the next round
+## * visitors = during the night, if a villager moves to this house,
+## 	then they 'visit' it for that single step (and 'meet' the other visitors there)
+## * contents = temporary items that get dropped there during the night be a
+## visitng villager or commandment or w/e 
+class_name House
+extends RefCounted
+
+var pos: Vector2i
+var arrow: Vector2i # See direction.gd
+var tags: Array[StringName] = []
+var occupant: BaseVillager
+var visitors: Array[BaseVillager] = [] # villagers here this step
+# var contents: Array[BaseItem] = [] # Temp items
+
+func _init(p: Vector2i, dir: Vector2i, t: Array = []):
+	pos = p
+	arrow = dir
+	for x in t:
+		tags.append(x if x is StringName else StringName(x))
+
+func has_any_tag(want: Array[StringName]) -> bool:
+	for t in want:
+		if t in tags:
+			return true
+	return false
+
+func is_edge(w: int, h: int) -> bool:
+	return pos.x == 0 or pos.y == 0 or pos.x == w - 1 or pos.y == h - 1
+
+func _to_string() -> String:
+	return "House(%s, arrow=%s, tags=[%s], n=%d)" % [
+		str(pos), str(arrow), ",".join(PackedStringArray(tags)), visitors.size()
+	]

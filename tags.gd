@@ -1,3 +1,5 @@
+class_name Tags
+
 const T = {
 	# Species
 	GOBLIN = &"goblin",
