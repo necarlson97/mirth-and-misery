@@ -10,12 +10,12 @@ class Klobly extends BaseVillager:
 		movement = MovementProfile.Orthogonal.new(0.5, 0, 0.5, 0)
 
 		rules = [
-			Rules.DeathRule.new(Triggers.OnMeet.new(T.WARRIOR)),
-			Rules.DeathRule.new(Triggers.OnVisit.new(T.DEVIL)),
-			Rules.DeathRule.new(Triggers.OnEdge.new()),
+			Rules.Death.new(Triggers.OnMeet.new(T.WARRIOR)),
+			Rules.Death.new(Triggers.OnVisit.new(T.DEVIL)),
+			Rules.Death.new(Triggers.OnEdge.new()),
 
-			Rules.TearsRule.new(Triggers.OnMeet.new(T.HUMAN), 1),
-			Rules.LaughsRule.new(Triggers.OnVisit.new(T.GOBLIN), 2),
+			Rules.Tears.new(Triggers.OnMeet.new(T.HUMAN), 1),
+			Rules.Laughs.new(Triggers.OnVisit.new(T.GOBLIN), 2),
 		]
 
 	func after_move(house_from, house_to):
