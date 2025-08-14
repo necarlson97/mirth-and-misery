@@ -10,60 +10,103 @@ var grid: VillageGrid
 var rng: Rng
 var trace: SimTrace
 
+const H = Hooks.H
+
 func _init(_grid, _rng):
 	grid = _grid
 	rng = _rng
 	trace = SimTrace.new()
 
-func run_single_walker(v, start_pos: Vector2i, max_steps := 256) -> SimTrace:
-	# This is intentionally simple; we’ll expand as we add more villagers/systems.
-	var pos := start_pos
-	grid.get_house(pos).visitors.append(v)
+func run_night(max_steps := 256) -> SimTrace:
+	trace.log("NightStart")
+	# Snapshot starting positions (villagers were placed during the day)
+	var pos_by_villager: Dictionary = grid.villagers_and_positions()
 
-	trace.log("NightStart: %s at %s" % [v.to_string(), str(pos)])
+	# Each villager keeps its own visited set (positions)
+	var visited_by_v: Dictionary = {}
+	for v in pos_by_villager.keys():
+		visited_by_v[v] = { pos_by_villager[v]: true }
 
-	var visited := {}
-	visited[pos] = true
+	for tick in range(max_steps):
+		trace.log("Tick %d" % (tick + 1))
 
-	for step in range(max_steps):
-		# 1) choose intended next
-		var intend = v.movement.choose_next(pos, grid)
+		# — Phase 1: intents —
+		var intents: Dictionary = {}  # villager => intended Vector2i
+		for v in pos_by_villager.keys():
+			if v.is_dead:
+				continue
+			var from_pos: Vector2i = pos_by_villager[v]
+			var intend: Vector2i = v.movement.choose_next(from_pos, grid)
 
-		# 2) AttemptExit hook (if leaving grid)
-		if not grid.is_inside(intend):
-			var ctx_exit := SimContext.new(&"AttemptExit", grid, v, pos, intend, rng)
-			v.on_hook(&"AttemptExit", ctx_exit)
-			# Effect may have redirected into grid
-			intend = ctx_exit.to_pos
+			# AttemptExit → allow effects to redirect
+			if not grid.is_inside(intend):
+				var ctx_exit := SimContext.new(H.AttemptExit, grid, v, from_pos, intend, rng, visited_by_v[v])
+				v.on_hook(H.AttemptExit, ctx_exit)
+				if ctx_exit.to_pos != intend:
+					v.on_hook(H.Redirected, ctx_exit)
+				intend = ctx_exit.to_pos
 
-		# 3) If still outside, we stop (exited)
-		if not grid.is_inside(intend):
-			trace.log("Exit at %s" % str(intend))
-			break
+			intents[v] = intend
 
-		# 4) BeforeMove / AfterMove
-		var ctx_before := SimContext.new(&"BeforeMove", grid, v, pos, intend, rng)
-		v.on_hook(&"BeforeMove", ctx_before)
+		# — Early exit removal —
+		for v in intents.keys():
+			var p: Vector2i = intents[v]
+			if not grid.is_inside(p):
+				trace.log("Exit: %s leaves at %s" % [v.to_string(), str(p)])
+				# Remove from board; keep in dict but mark as dead/exited.
+				v.mark_dead("Exited")
+		# drop dead/exited from this tick’s movement
+		for v in pos_by_villager.keys():
+			if v.is_dead:
+				intents.erase(v)
 
-		grid.move_villager(v, pos, intend)
-		var ctx_after := SimContext.new(&"AfterMove", grid, v, pos, intend, rng)
-		v.on_hook(&"AfterMove", ctx_after)
+		# — Phase 2: BeforeMove —
+		for v in intents.keys():
+			var from_pos: Vector2i = pos_by_villager[v]
+			var to_pos: Vector2i = intents[v]
+			var ctx_before := SimContext.new(H.BeforeMove, grid, v, from_pos, to_pos, rng, visited_by_v[v])
+			v.on_hook(H.BeforeMove, ctx_before)
+			# effects could have modified to_pos (rare, but allow)
+			intents[v] = ctx_before.to_pos
 
-		pos = intend
-		trace.log("Step %d: -> %s" % [step + 1, str(pos)])
+		# — Phase 3: commit all moves simultaneously —
+		for v in intents.keys():
+			var from_pos: Vector2i = pos_by_villager[v]
+			var to_pos: Vector2i = intents[v]
+			grid.move_villager(v, from_pos, to_pos)
+			pos_by_villager[v] = to_pos
 
-		# 5) OnVisit
-		var ctx_visit := SimContext.new(&"OnVisit", grid, v, pos, pos, rng)
-		v.on_hook(&"OnVisit", ctx_visit)
+		# — Phase 4: AfterMove + OnVisit —
+		for v in intents.keys():
+			var from_pos: Vector2i = pos_by_villager[v]  # already updated, so compute back
+			var to_pos: Vector2i = intents[v]
+			var ctx_after := SimContext.new(H.AfterMove, grid, v, from_pos, to_pos, rng, visited_by_v[v])
+			v.on_hook(H.AfterMove, ctx_after)
 
-		# stopping conditions
-		if v.is_dead:
-			trace.log("Death at %s" % str(pos))
-			break
-		if visited.has(pos):
-			trace.log("Loop detected at %s" % str(pos))
-			break
-		visited[pos] = true
+			var ctx_visit := SimContext.new(H.OnVisit, grid, v, to_pos, to_pos, rng, visited_by_v[v])
+			v.on_hook(H.OnVisit, ctx_visit)
 
-	trace.log("NightEnd: tears=%d laughter=%d" % [v.tears, v.laughter])
+		# — Phase 5: book-keeping, deaths, visited sets —
+		var all_dead := true
+		for v in pos_by_villager.keys():
+			if v.is_dead:
+				continue
+			all_dead = false
+			# record visit AFTER OnVisit (so OnVisit sees has_visited_to_before correctly)
+			visited_by_v[v][pos_by_villager[v]] = true
+
+		if all_dead:
+			trace.log("NightEnd: all villagers done")
+			return trace
+
+	# If we get here, we hit the step cap
+	trace.log("NightMaxSteps")
+	# Let content decide what bonuses happen at cap:
+	for v in pos_by_villager.keys():
+		if v.is_dead: continue
+		var p: Vector2i = pos_by_villager[v]
+		var ctx_cap := SimContext.new(H.NightMaxSteps, grid, v, p, p, rng, visited_by_v[v])
+		v.on_hook(H.NightMaxSteps, ctx_cap)
+
+	trace.log("NightEnd (step cap)")
 	return trace

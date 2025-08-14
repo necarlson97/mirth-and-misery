@@ -39,6 +39,10 @@ class OnMeet extends BaseTrigger:
 	func default_hook() -> StringName:
 		return H.OnVisit
 
+class OnRevisit extends BaseTrigger:
+	func check(ctx) -> bool:
+		return ctx.has_visited_to_before
+
 class OnExit extends BaseTrigger:
 
 	func check(ctx) -> bool:

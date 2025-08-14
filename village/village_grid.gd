@@ -29,22 +29,41 @@ func arrow_of(p: Vector2i) -> Vector2i:
 func any_villager_with_tags_at(p: Vector2i, want: Array[StringName], except = null) -> bool:
 	if not is_inside(p):
 		return false
-	for v in get_house(p).contents:
+	for v in get_house(p).visitors:
 		if v == except:
 			continue
 		if v.has_any_tag(want):
 			return true
 	return false
 
+
+func place_villager(v: BaseVillager, p: Vector2i) -> void:
+	assert(is_inside(p))
+	get_house(p).visitors.append(v)
+
+func remove_villager(v: BaseVillager, p: Vector2i) -> void:
+	if is_inside(p):
+		get_house(p).visitors.erase(v)
+
 func move_villager(v: BaseVillager, from_pos: Vector2i, to_pos: Vector2i) -> void:
-	# Remove from current house and place into next (no animations here).
-	var from_house := get_house(from_pos)
-	var to_house := get_house(to_pos)
-	from_house.visitors.erase(v)
-	to_house.visitors.append(v)
+	remove_villager(v, from_pos)
+	place_villager(v, to_pos)
 	
 func is_edge(p: Vector2i) -> bool:
 	return p.x == 0 or p.y == 0 or p.x == size.x - 1 or p.y == size.y - 1
+	
+func is_outside(p: Vector2i) -> bool:
+	return p.x < 0 or p.y < 0 or p.x > size.x - 1 or p.y > size.y - 1
+	
+func villagers_and_positions() -> Dictionary:
+	# Returns { villager: Vector2i }
+	var out := {}
+	for y in range(size.y):
+		for x in range(size.x):
+			var h: House = cells[y][x]
+			for v in h.visitors:
+				out[v] = h.pos
+	return out
 
 func _to_string() -> String:
 	return "VillageGrid(%dx%d)" % [size.x, size.y]

@@ -16,4 +16,7 @@ const H = {
 
 	# Scoring lifecycle
 	OnGainPoints = &"OnGainPoints", # right before currency is added
+	
+	# Meta
+	NightMaxSteps = &"NightMaxSteps", # fired if night ends due to step cap
 }

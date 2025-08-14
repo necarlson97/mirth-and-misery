@@ -4,16 +4,18 @@ class_name SimContext
 extends RefCounted
 
 var hook: StringName
-var grid: VillageGrid
-var villager: BaseVillager
+var grid
+var villager
 var from_pos: Vector2i
 var to_pos: Vector2i
-var from_house: House
-var to_house: House
-var rng: Rng
-var _redirect_delta: Vector2i = Vector2i.ZERO
+var from_house
+var to_house
+var rng
 
-func _init(_hook: StringName, _grid, _villager, _from: Vector2i, _to: Vector2i, _rng):
+# per-villager visit memory (read-only here)
+var has_visited_to_before: bool = false
+
+func _init(_hook, _grid, _villager, _from: Vector2i, _to: Vector2i, _rng, _visited: Dictionary = {}):
 	hook = _hook
 	grid = _grid
 	villager = _villager
@@ -22,21 +24,15 @@ func _init(_hook: StringName, _grid, _villager, _from: Vector2i, _to: Vector2i, 
 	from_house = grid.get_house(_from) if grid.is_inside(_from) else null
 	to_house = grid.get_house(_to) if grid.is_inside(_to) else null
 	rng = _rng
-
-func redirect() -> SimContext:
-	# Returns a tiny helper with methods effects can call (e.g., reverse_last_step).
-	return self
+	has_visited_to_before = _visited.has(_to)
 
 func reverse_last_step() -> void:
-	# Reverse the intent vector: to_pos = from_pos - (to_pos - from_pos)
 	var delta := to_pos - from_pos
-	_redirect_delta = -delta
-	to_pos = from_pos + _redirect_delta
-	to_house = grid.get_house(to_pos) if grid.is_inside(to_pos) else null
-
-func emit_redirect() -> void:
-	# Placeholder: in future we can record into trace here if needed.
-	pass
+	to_pos = from_pos - delta
+	if grid.is_inside(to_pos):
+		to_house = grid.get_house(to_pos)
+	else:
+		to_house = null
 
 func _to_string() -> String:
 	return "Ctx(%s %s->%s %s)" % [str(hook), str(from_pos), str(to_pos), villager.to_string()]
