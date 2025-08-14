@@ -7,9 +7,9 @@ extends RefCounted
 var id: StringName
 var name: String = ""
 var tags: Array[StringName] = []
-var movement: MovementProfile
+var movement: Walks.BaseWalk
 var rules: Array[BaseRule] = []
-var is_dead: bool = false
+var is_sleeping: bool = false
 
 # TODO how exactly do we want to handle tears/laughter?
 # Perhaps:
@@ -46,8 +46,8 @@ func add_tears(n: int, ctx) -> void:
 func add_laughter(n: int, ctx) -> void:
 	laughter += n
 
-func mark_dead(reason: String = "") -> void:
-	is_dead = true
+func mark_sleep(reason: String = "") -> void:
+	is_sleeping = true
 	# For now we only flag; the simulator decides how to remove from board.
 
 func _to_string() -> String:

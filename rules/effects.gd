@@ -21,9 +21,9 @@ class GetLaughs extends BaseEffect:
 	func apply(ctx) -> void:
 		ctx.villager.add_laughter(amount, ctx)
 
-class KillSelf extends BaseEffect:
+class SleepSelf extends BaseEffect:
 	func apply(ctx) -> void:
-		ctx.villager.mark_dead("Killed by %s at %s" % [ctx.rule, ctx.hook])
+		ctx.villager.mark_sleep("Sleeped by %s at %s" % [ctx.rule, ctx.hook])
 
 class RedirectReverse extends BaseEffect:
 	## Redirects movement by reversing last step (i.e., bounce-back).

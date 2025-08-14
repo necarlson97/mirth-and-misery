@@ -1,6 +1,12 @@
-[gd_scene load_steps=2 format=3 uid="uid://bjpwd1uvrwy6p"]
+[gd_scene load_steps=3 format=3 uid="uid://bjpwd1uvrwy6p"]
 
 [ext_resource type="Script" uid="uid://b3tgawdxgmte" path="res://scenes/mvp.gd" id="1_oajtv"]
+[ext_resource type="Script" uid="uid://bvqdrpvcvbyce" path="res://scenes/board_view.gd" id="2_ql4gi"]
 
-[node name="mvp" type="Node2D"]
+[node name="Mvp" type="Node2D"]
 script = ExtResource("1_oajtv")
+
+[node name="BoardView" type="Node2D" parent="."]
+script = ExtResource("2_ql4gi")
+
+[node name="Tokens" type="Node2D" parent="."]

@@ -12,7 +12,7 @@ class OnVisit extends BaseTrigger:
 	func check(ctx) -> bool:
 		# True if the *destination* house is inhabited,
 		# and if the villager living there has any of the given tags
-		var occ = ctx.to_house.occupant
+		var occ = ctx.to_house.resident
 		return occ!= null and occ.has_any_tag(tags)
 
 	func _to_string() -> String:
@@ -50,7 +50,7 @@ class OnExit extends BaseTrigger:
 		return not ctx.grid.is_inside(ctx.to_pos)
 		
 	func default_hook() -> StringName:
-		return H.BeforeMove
+		return H.BeforeStep
 
 class Always extends BaseTrigger:
 

@@ -1,0 +1,14 @@
+
+A set of different movements / shaders to choose from for each villager to have a few:
+Constant:
+	* An idle animation: float, wiggle, stretch/squash breathe, lean-shear back and forth
+	(also determines their seperate 'movement' animation?)
+Periodic:
+	* A idle animation:
+	* A shine / sparkle showing their rarity
+On gover:
+	
+Ideas for villagers (or triggers or effects or w/e):
+	* When any other villager sleeps
+	* Frail resident - dies if player tries to resettle
+	* 

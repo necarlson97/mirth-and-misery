@@ -12,7 +12,7 @@ extends RefCounted
 var pos: Vector2i
 var arrow: Vector2i # See direction.gd
 var tags: Array[StringName] = []
-var occupant: BaseVillager
+var resident: BaseVillager # villager that player told to start the round here
 var visitors: Array[BaseVillager] = [] # villagers here this step
 # var contents: Array[BaseItem] = [] # Temp items
 

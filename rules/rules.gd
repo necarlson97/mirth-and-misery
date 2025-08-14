@@ -3,9 +3,9 @@
 class_name Rules
 
 const H = Hooks.H
-class Death extends BaseRule:
+class Sleep extends BaseRule:
 	func _init(t : BaseTrigger = Triggers.OnExit.new(), h := StringName()):
-		super(h, t, Effects.KillSelf.new())
+		super(h, t, Effects.SleepSelf.new())
 
 class Tears extends BaseRule:
 	func _init(t: BaseTrigger, a := 1):

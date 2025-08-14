@@ -16,3 +16,7 @@ const T = {
 	VAGRANT = &"vagrant",
 	PURITAN = &"puritan",
 }
+
+# TODO could do things like:
+# old, young
+# flying

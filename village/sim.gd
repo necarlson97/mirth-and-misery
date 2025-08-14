@@ -33,7 +33,7 @@ func run_night(max_steps := 256) -> SimTrace:
 		# — Phase 1: intents —
 		var intents: Dictionary = {}  # villager => intended Vector2i
 		for v in pos_by_villager.keys():
-			if v.is_dead:
+			if v.is_sleeping:
 				continue
 			var from_pos: Vector2i = pos_by_villager[v]
 			var intend: Vector2i = v.movement.choose_next(from_pos, grid)
@@ -53,11 +53,11 @@ func run_night(max_steps := 256) -> SimTrace:
 			var p: Vector2i = intents[v]
 			if not grid.is_inside(p):
 				trace.log("Exit: %s leaves at %s" % [v.to_string(), str(p)])
-				# Remove from board; keep in dict but mark as dead/exited.
-				v.mark_dead("Exited")
+				# Remove from board; keep in dict but mark as sleeping
+				v.mark_sleep("Exited")
 		# drop dead/exited from this tick’s movement
 		for v in pos_by_villager.keys():
-			if v.is_dead:
+			if v.is_sleeping:
 				intents.erase(v)
 
 		# — Phase 2: BeforeMove —
@@ -87,23 +87,23 @@ func run_night(max_steps := 256) -> SimTrace:
 			v.on_hook(H.OnVisit, ctx_visit)
 
 		# — Phase 5: book-keeping, deaths, visited sets —
-		var all_dead := true
+		var all_sleeping := true
 		for v in pos_by_villager.keys():
-			if v.is_dead:
+			if v.is_sleeping:
 				continue
-			all_dead = false
+			all_sleeping = false
 			# record visit AFTER OnVisit (so OnVisit sees has_visited_to_before correctly)
 			visited_by_v[v][pos_by_villager[v]] = true
 
-		if all_dead:
-			trace.log("NightEnd: all villagers done")
+		if all_sleeping:
+			trace.log("NightEnd: all villagers sleeping")
 			return trace
 
 	# If we get here, we hit the step cap
 	trace.log("NightMaxSteps")
 	# Let content decide what bonuses happen at cap:
 	for v in pos_by_villager.keys():
-		if v.is_dead: continue
+		if v.is_sleeping: continue
 		var p: Vector2i = pos_by_villager[v]
 		var ctx_cap := SimContext.new(H.NightMaxSteps, grid, v, p, p, rng, visited_by_v[v])
 		v.on_hook(H.NightMaxSteps, ctx_cap)
