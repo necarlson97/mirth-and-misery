@@ -6,6 +6,7 @@ const T = {
 	HUMAN = &"human",
 	DEVIL = &"devil",
 	FAE = &"fae",
+	VAMPIRE = &"vampire",
 	
 	# Profession
 	WARRIOR = &"warrior",
@@ -13,4 +14,5 @@ const T = {
 	FOODIE = &"foodie",
 	FARMER = &"farmer",
 	VAGRANT = &"vagrant",
+	PURITAN = &"puritan",
 }

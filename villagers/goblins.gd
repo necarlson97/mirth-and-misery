@@ -12,7 +12,7 @@ class Klobly extends BaseVillager:
 		rules = [
 			Rules.Death.new(Triggers.OnMeet.new(T.WARRIOR)),
 			Rules.Death.new(Triggers.OnVisit.new(T.DEVIL)),
-			Rules.Death.new(Triggers.OnEdge.new()),
+			Rules.Death.new(Triggers.OnExit.new()),
 
 			Rules.Tears.new(Triggers.OnMeet.new(T.HUMAN), 1),
 			Rules.Laughs.new(Triggers.OnVisit.new(T.GOBLIN), 2),

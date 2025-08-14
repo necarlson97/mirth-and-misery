@@ -9,6 +9,10 @@ func check(ctx: Object) -> bool:
 	push_error("BaseTrigger.check not implemented")
 	return false
 
+func default_hook() -> StringName:
+	# Empty by default; subclasses can override to suggest a hook.
+	return StringName()
+
 func _to_string() -> String:
 	# TODO does this return 'BaseTrigger' (parent class),
 	# or the desired subclass name?

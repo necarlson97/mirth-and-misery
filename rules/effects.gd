@@ -3,8 +3,7 @@
 extends RefCounted
 class_name Effects
 
-class GetTears:
-	extends BaseEffect
+class GetTears extends BaseEffect:
 	var amount: int
 
 	func _init(a: int):
@@ -13,8 +12,7 @@ class GetTears:
 	func apply(ctx) -> void:
 		ctx.villager.add_tears(amount, ctx)
 
-class GetLaughs:
-	extends BaseEffect
+class GetLaughs extends BaseEffect:
 	var amount: int
 
 	func _init(a: int):
@@ -23,14 +21,11 @@ class GetLaughs:
 	func apply(ctx) -> void:
 		ctx.villager.add_laughter(amount, ctx)
 
-class KillSelf:
-	extends BaseEffect
-
+class KillSelf extends BaseEffect:
 	func apply(ctx) -> void:
 		ctx.villager.mark_dead("Killed by %s at %s" % [ctx.rule, ctx.hook])
 
-class RedirectReverse:
-	extends BaseEffect
+class RedirectReverse extends BaseEffect:
 	## Redirects movement by reversing last step (i.e., bounce-back).
 	func apply(ctx) -> void:
 		ctx.redirect.reverse_last_step()

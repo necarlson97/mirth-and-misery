@@ -42,6 +42,9 @@ func move_villager(v: BaseVillager, from_pos: Vector2i, to_pos: Vector2i) -> voi
 	var to_house := get_house(to_pos)
 	from_house.visitors.erase(v)
 	to_house.visitors.append(v)
+	
+func is_edge(p: Vector2i) -> bool:
+	return p.x == 0 or p.y == 0 or p.x == size.x - 1 or p.y == size.y - 1
 
 func _to_string() -> String:
 	return "VillageGrid(%dx%d)" % [size.x, size.y]

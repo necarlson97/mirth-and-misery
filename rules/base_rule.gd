@@ -7,10 +7,13 @@ var hook: StringName
 var trigger: BaseTrigger
 var effect: BaseEffect
 
-func _init(h: StringName, t: BaseTrigger, e: BaseEffect) -> void:
-	hook = h
+func _init(h := StringName(), t := BaseTrigger.new(), e := BaseEffect.new()) -> void:
+	# Many triggers are inherently tied to a certian part of the lifecycle
+	# (such as OnVist trigger being hooked by 'OnVisit')
 	trigger = t
 	effect = e
+	hook = h if h != StringName() else t.default_hook()
+	assert(hook != StringName(), "Rule requires a hook (none provided and trigger has no default).")
 
 func try_apply(h: StringName, ctx: Object) -> bool:
 	# Returns true if effect ran.

@@ -28,9 +28,6 @@ func has_any_tag(want: Array[StringName]) -> bool:
 			return true
 	return false
 
-func is_edge(w: int, h: int) -> bool:
-	return pos.x == 0 or pos.y == 0 or pos.x == w - 1 or pos.y == h - 1
-
 func _to_string() -> String:
 	return "House(%s, arrow=%s, tags=[%s], n=%d)" % [
 		str(pos), str(arrow), ",".join(PackedStringArray(tags)), visitors.size()
