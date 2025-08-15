@@ -1,0 +1,30 @@
+[gd_scene load_steps=4 format=3 uid="uid://dauwyf60xj4wy"]
+
+[ext_resource type="Texture2D" uid="uid://b2h3gt6jhkhw2" path="res://assets/board/house.png" id="1_3m4gj"]
+[ext_resource type="Script" uid="uid://d3ilvh6nqitp7" path="res://scenes/house_cell.gd" id="1_xdsnm"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_d6gm5"]
+
+[node name="HouseCell" type="PanelContainer"]
+custom_minimum_size = Vector2(60, 60)
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxEmpty_d6gm5")
+script = ExtResource("1_xdsnm")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 2
+texture = ExtResource("1_3m4gj")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 0
+text = "0, 1"
+horizontal_alignment = 1
+
+[node name="Dock" type="CenterContainer" parent="."]
+layout_mode = 2

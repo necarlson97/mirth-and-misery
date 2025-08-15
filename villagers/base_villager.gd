@@ -10,6 +10,10 @@ var tags: Array[StringName] = []
 var movement: Walks.BaseWalk
 var rules: Array[BaseRule] = []
 var is_sleeping: bool = false
+var residence: House
+
+var villager_token_prefab: PackedScene = preload("res://scenes/villager_token.tscn")
+var token: VillagerToken
 
 # TODO how exactly do we want to handle tears/laughter?
 # Perhaps:
@@ -28,11 +32,7 @@ func _init(_id: StringName):
 	id = _id
 
 func has_any_tag(want: Array[StringName]) -> bool:
-	# TODO likely more readable as functional 'any'
-	for t in want:
-		if t in tags:
-			return true
-	return false
+	return want.any(func(t): return t in tags)
 
 func on_hook(hook: StringName, ctx) -> void:
 	# Dispatch all rules bound to this hook.
@@ -49,6 +49,32 @@ func add_laughter(n: int, ctx) -> void:
 func mark_sleep(reason: String = "") -> void:
 	is_sleeping = true
 	# For now we only flag; the simulator decides how to remove from board.
+
+func get_token() -> VillagerToken:
+	# Return (and create if needed) a villager token to represent this
+	# villager on the board (handles frontend stuff like drag/drop and whatnot)
+	if token != null:
+		return token
+	
+	token = villager_token_prefab.instantiate() as VillagerToken
+	token.villager = self
+	if residence:
+		token.reparent(residence.get_cell().dock)
+	return token
+
+func resettle(new_house: House):
+	# Set this villager to a new residence,
+	# updating their token and whatnot as needed
+	if residence != null:
+		assert(residence.resident == self, "My link to previous residence is broken")
+		residence.resident = null
+	
+	assert(new_house.resident == null, "Someone already lives at next house")
+	new_house.resident = self
+	
+	residence = new_house
+	if token:
+		token.reparent(new_house.get_cell().dock)
 
 func _to_string() -> String:
 	return "Villager(%s, tags=[%s], %s)" % [
