@@ -1,0 +1,321 @@
+[gd_scene load_steps=7 format=3 uid="uid://2jbstdrqin0n"]
+
+[ext_resource type="Texture2D" uid="uid://c08ry8f60v3mn" path="res://assets/board/day dial.png" id="1_wuj63"]
+[ext_resource type="Texture2D" uid="uid://byqwnohgnh5e7" path="res://assets/board/day dial hand.png" id="2_stqms"]
+[ext_resource type="Texture2D" uid="uid://cvua76lho74os" path="res://assets/board/commandments bar.png" id="3_osqni"]
+[ext_resource type="Texture2D" uid="uid://cxi1e4te32yk0" path="res://assets/board/grid.png" id="4_w88ds"]
+[ext_resource type="Texture2D" uid="uid://b2h3gt6jhkhw2" path="res://assets/board/house.png" id="5_yao1y"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_d6gm5"]
+
+[node name="VillageBoard" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TopAlign" type="VBoxContainer" parent="."]
+custom_minimum_size = Vector2(600, 0)
+layout_mode = 1
+anchors_preset = 13
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -83.0
+offset_right = 83.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Commandments" type="PanelContainer" parent="TopAlign"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="TopAlign/Commandments"]
+layout_mode = 2
+texture = ExtResource("3_osqni")
+expand_mode = 5
+
+[node name="HBoxContainer" type="HBoxContainer" parent="TopAlign"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 2.0
+
+[node name="PanelContainer" type="PanelContainer" parent="TopAlign/HBoxContainer"]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="TopAlign/HBoxContainer"]
+custom_minimum_size = Vector2(0, 300)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="GridBG" type="TextureRect" parent="TopAlign/HBoxContainer/AspectRatioContainer"]
+layout_mode = 2
+texture = ExtResource("4_w88ds")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="MarginContainer" type="MarginContainer" parent="TopAlign/HBoxContainer/AspectRatioContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 11
+theme_override_constants/margin_top = 11
+theme_override_constants/margin_right = 11
+theme_override_constants/margin_bottom = 11
+
+[node name="GridContainer" type="GridContainer" parent="TopAlign/HBoxContainer/AspectRatioContainer/MarginContainer"]
+layout_mode = 2
+columns = 4
+
+[node name="HouseCell" type="PanelContainer" parent="TopAlign/HBoxContainer/AspectRatioContainer/MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxEmpty_d6gm5")
+
+[node name="TextureRect" type="TextureRect" parent="TopAlign/HBoxContainer/AspectRatioContainer/MarginContainer/GridContainer/HouseCell"]
+layout_mode = 2
+texture = ExtResource("5_yao1y")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="HouseCell6" type="PanelContainer" parent="TopAlign/HBoxContainer/AspectRatioContainer/MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxEmpty_d6gm5")
+
+[node name="TextureRect" type="TextureRect" parent="TopAlign/HBoxContainer/AspectRatioContainer/MarginContainer/GridContainer/HouseCell6"]
+layout_mode = 2
+texture = ExtResource("5_yao1y")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="HouseCell7" type="PanelContainer" parent="TopAlign/HBoxContainer/AspectRatioContainer/MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxEmpty_d6gm5")
+
+[node name="TextureRect" type="TextureRect" parent="TopAlign/HBoxContainer/AspectRatioContainer/MarginContainer/GridContainer/HouseCell7"]
+layout_mode = 2
+texture = ExtResource("5_yao1y")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="HouseCell8" type="PanelContainer" parent="TopAlign/HBoxContainer/AspectRatioContainer/MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxEmpty_d6gm5")
+
+[node name="TextureRect" type="TextureRect" parent="TopAlign/HBoxContainer/AspectRatioContainer/MarginContainer/GridContainer/HouseCell8"]
+layout_mode = 2
+texture = ExtResource("5_yao1y")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="HouseCell9" type="PanelContainer" parent="TopAlign/HBoxContainer/AspectRatioContainer/MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxEmpty_d6gm5")
+
+[node name="TextureRect" type="TextureRect" parent="TopAlign/HBoxContainer/AspectRatioContainer/MarginContainer/GridContainer/HouseCell9"]
+layout_mode = 2
+texture = ExtResource("5_yao1y")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="HouseCell10" type="PanelContainer" parent="TopAlign/HBoxContainer/AspectRatioContainer/MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxEmpty_d6gm5")
+
+[node name="TextureRect" type="TextureRect" parent="TopAlign/HBoxContainer/AspectRatioContainer/MarginContainer/GridContainer/HouseCell10"]
+layout_mode = 2
+texture = ExtResource("5_yao1y")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="HouseCell11" type="PanelContainer" parent="TopAlign/HBoxContainer/AspectRatioContainer/MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxEmpty_d6gm5")
+
+[node name="TextureRect" type="TextureRect" parent="TopAlign/HBoxContainer/AspectRatioContainer/MarginContainer/GridContainer/HouseCell11"]
+layout_mode = 2
+texture = ExtResource("5_yao1y")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="HouseCell12" type="PanelContainer" parent="TopAlign/HBoxContainer/AspectRatioContainer/MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxEmpty_d6gm5")
+
+[node name="TextureRect" type="TextureRect" parent="TopAlign/HBoxContainer/AspectRatioContainer/MarginContainer/GridContainer/HouseCell12"]
+layout_mode = 2
+texture = ExtResource("5_yao1y")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="HouseCell13" type="PanelContainer" parent="TopAlign/HBoxContainer/AspectRatioContainer/MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxEmpty_d6gm5")
+
+[node name="TextureRect" type="TextureRect" parent="TopAlign/HBoxContainer/AspectRatioContainer/MarginContainer/GridContainer/HouseCell13"]
+layout_mode = 2
+texture = ExtResource("5_yao1y")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="HouseCell14" type="PanelContainer" parent="TopAlign/HBoxContainer/AspectRatioContainer/MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxEmpty_d6gm5")
+
+[node name="TextureRect" type="TextureRect" parent="TopAlign/HBoxContainer/AspectRatioContainer/MarginContainer/GridContainer/HouseCell14"]
+layout_mode = 2
+texture = ExtResource("5_yao1y")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="HouseCell15" type="PanelContainer" parent="TopAlign/HBoxContainer/AspectRatioContainer/MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxEmpty_d6gm5")
+
+[node name="TextureRect" type="TextureRect" parent="TopAlign/HBoxContainer/AspectRatioContainer/MarginContainer/GridContainer/HouseCell15"]
+layout_mode = 2
+texture = ExtResource("5_yao1y")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="HouseCell16" type="PanelContainer" parent="TopAlign/HBoxContainer/AspectRatioContainer/MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxEmpty_d6gm5")
+
+[node name="TextureRect" type="TextureRect" parent="TopAlign/HBoxContainer/AspectRatioContainer/MarginContainer/GridContainer/HouseCell16"]
+layout_mode = 2
+texture = ExtResource("5_yao1y")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="HouseCell3" type="PanelContainer" parent="TopAlign/HBoxContainer/AspectRatioContainer/MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxEmpty_d6gm5")
+
+[node name="TextureRect" type="TextureRect" parent="TopAlign/HBoxContainer/AspectRatioContainer/MarginContainer/GridContainer/HouseCell3"]
+layout_mode = 2
+texture = ExtResource("5_yao1y")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="HouseCell4" type="PanelContainer" parent="TopAlign/HBoxContainer/AspectRatioContainer/MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxEmpty_d6gm5")
+
+[node name="TextureRect" type="TextureRect" parent="TopAlign/HBoxContainer/AspectRatioContainer/MarginContainer/GridContainer/HouseCell4"]
+layout_mode = 2
+texture = ExtResource("5_yao1y")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="HouseCell5" type="PanelContainer" parent="TopAlign/HBoxContainer/AspectRatioContainer/MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxEmpty_d6gm5")
+
+[node name="TextureRect" type="TextureRect" parent="TopAlign/HBoxContainer/AspectRatioContainer/MarginContainer/GridContainer/HouseCell5"]
+layout_mode = 2
+texture = ExtResource("5_yao1y")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="HouseCell2" type="PanelContainer" parent="TopAlign/HBoxContainer/AspectRatioContainer/MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxEmpty_d6gm5")
+
+[node name="TextureRect" type="TextureRect" parent="TopAlign/HBoxContainer/AspectRatioContainer/MarginContainer/GridContainer/HouseCell2"]
+layout_mode = 2
+texture = ExtResource("5_yao1y")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="ProgressBar" type="ProgressBar" parent="TopAlign/HBoxContainer"]
+custom_minimum_size = Vector2(30, 0)
+layout_mode = 2
+size_flags_vertical = 1
+fill_mode = 3
+
+[node name="ProgressBar2" type="ProgressBar" parent="TopAlign/HBoxContainer"]
+custom_minimum_size = Vector2(30, 0)
+layout_mode = 2
+size_flags_vertical = 1
+fill_mode = 3
+
+[node name="BottomAlign" type="VBoxContainer" parent="TopAlign"]
+layout_mode = 2
+size_flags_vertical = 3
+alignment = 2
+
+[node name="Control" type="Control" parent="TopAlign/BottomAlign"]
+clip_contents = true
+custom_minimum_size = Vector2(400, 200)
+layout_mode = 2
+size_flags_vertical = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TopAlign/BottomAlign/Control"]
+custom_minimum_size = Vector2(0, 400)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 196.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 2
+
+[node name="DialBG" type="TextureRect" parent="TopAlign/BottomAlign/Control/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+texture = ExtResource("1_wuj63")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="DialHand" type="TextureRect" parent="TopAlign/BottomAlign/Control/VBoxContainer/DialBG"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -300.0
+offset_top = -200.0
+offset_right = 300.0
+offset_bottom = 200.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = -0.811578
+pivot_offset = Vector2(300, 200)
+size_flags_vertical = 3
+texture = ExtResource("2_stqms")
+expand_mode = 2
+stretch_mode = 5

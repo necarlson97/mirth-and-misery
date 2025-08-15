@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="mirth and misery"
-run/main_scene="uid://bjpwd1uvrwy6p"
+run/main_scene="uid://2jbstdrqin0n"
 config/features=PackedStringArray("4.4", "GL Compatibility")
 config/icon="res://icon.svg"
 

@@ -11,4 +11,19 @@ On gover:
 Ideas for villagers (or triggers or effects or w/e):
 	* When any other villager sleeps
 	* Frail resident - dies if player tries to resettle
-	* 
+	* anytime anyone visits anyone
+	* anytime anyone moves
+	* anytime anyone meets another
+	
+	* In the caravan shop, you can dismiss vilalgers by two methods:
+		one sells for crystal-tears, one sells for crystal-laughs,
+		just dependent on villager rarity
+		(that way, you can cheekily convert one to the other, at a loss,
+		dependent on what is for sale)
+		What is the theme for this? For now, I'll leave as 'drowning vs stake-burning'
+		(tears v laughs) - but that is a bit macabre...
+	
+	* Some way to complicate game board - outdoorsman villager that brings up two
+	'tent spots' - places to put villagers for the night where they don't interact,
+	but you don't need to throw away
+	- maybe they are gaurentteed to show in in caravan by X round?
