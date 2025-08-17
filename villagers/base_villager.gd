@@ -59,7 +59,7 @@ func get_token() -> VillagerToken:
 	token = villager_token_prefab.instantiate() as VillagerToken
 	token.villager = self
 	if residence:
-		token.reparent(residence.get_cell().dock)
+		token.dock_to(residence.get_cell().dock)
 	return token
 
 func resettle(new_house: House):
@@ -74,11 +74,9 @@ func resettle(new_house: House):
 	
 	residence = new_house
 	if token:
-		token.reparent(new_house.get_cell().dock)
+		token.dock_to(new_house.get_cell().dock)
 
 func _to_string() -> String:
-	return "Villager(%s, tags=[%s], %s)" % [
-		str(id),
-		",".join(PackedStringArray(tags)),
-		movement.to_string() if movement else "no-move"
+	return "Villager(%s)" % [
+		self.get_class() 
 	]

@@ -11,8 +11,8 @@ var house: House
 
 func _ready():
 	mouse_filter = MOUSE_FILTER_STOP
-	custom_minimum_size = Vector2(96, 96)
 	mouse_default_cursor_shape = CURSOR_POINTING_HAND
+	assert(dock != null)
 
 func _can_drop_data(_at_position: Vector2, data: Variant) -> bool:
 	# We accept ItemDrag payloads originating from a VillagerToken
@@ -26,11 +26,6 @@ func _drop_data(_at_position: Vector2, data: Variant) -> void:
 
 	# Mark accepted so the token doesn't snap back in its completion handler
 	drag.destination = self
-
-	# Snap the token visually to this cell (center in overlay coords)
-	var overlay: Control = token.get_parent()
-	var center := get_global_rect().get_center()
-	token.position = center - token.size * 0.5
 
 	# Update token's logical cell and tell the game state
 	token.villager.resettle(house)

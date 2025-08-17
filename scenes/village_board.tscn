@@ -21,14 +21,14 @@ grid_container = NodePath("TopAlign/HBoxContainer/AspectRatioContainer/MarginCon
 house_cell_prefab = ExtResource("3_w88ds")
 
 [node name="TopAlign" type="VBoxContainer" parent="."]
-custom_minimum_size = Vector2(600, 0)
+custom_minimum_size = Vector2(700, 0)
 layout_mode = 1
 anchors_preset = 13
 anchor_left = 0.5
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -83.0
-offset_right = 83.0
+offset_left = -77.0
+offset_right = 77.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -44,7 +44,7 @@ expand_mode = 5
 [node name="HBoxContainer" type="HBoxContainer" parent="TopAlign"]
 layout_mode = 2
 size_flags_vertical = 3
-size_flags_stretch_ratio = 2.0
+size_flags_stretch_ratio = 3.0
 
 [node name="PanelContainer" type="PanelContainer" parent="TopAlign/HBoxContainer"]
 custom_minimum_size = Vector2(60, 0)
@@ -91,17 +91,16 @@ alignment = 2
 
 [node name="DialCutoff" type="Control" parent="TopAlign/BottomAlign"]
 clip_contents = true
-custom_minimum_size = Vector2(400, 200)
+custom_minimum_size = Vector2(0, 150)
 layout_mode = 2
 size_flags_vertical = 10
 
 [node name="VBoxContainer" type="VBoxContainer" parent="TopAlign/BottomAlign/DialCutoff"]
-custom_minimum_size = Vector2(0, 400)
 layout_mode = 1
-anchors_preset = 15
+anchors_preset = -1
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = 196.0
+offset_bottom = 150.0
 grow_horizontal = 2
 grow_vertical = 2
 alignment = 2
@@ -115,18 +114,11 @@ stretch_mode = 5
 
 [node name="DialHand" type="TextureRect" parent="TopAlign/BottomAlign/DialCutoff/VBoxContainer/DialBG"]
 layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -300.0
-offset_top = -200.0
-offset_right = 300.0
-offset_bottom = 200.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-rotation = -0.811578
 pivot_offset = Vector2(300, 200)
 size_flags_vertical = 3
 texture = ExtResource("2_stqms")
@@ -140,3 +132,4 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2

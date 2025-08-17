@@ -21,5 +21,5 @@ func _ready():
 	tokens_overlay.add_child(tok)
 	
 	# Snap to some starting cell (e.g., 1,1)
-	test_villager.resettle(House.get_at(Vector2i(1, 1)))
+	Utils.defer_once(func(): test_villager.resettle(House.get_at(Vector2i(1, 1))))
 	print("Villager token at: %s %s" % [tok, tok.global_position])

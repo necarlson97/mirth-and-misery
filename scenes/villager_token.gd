@@ -31,12 +31,23 @@ func _on_drag_completed(drag: ItemDrag) -> void:
 		# For MVP, we emit a signal or call back into a manager to do the snapping.
 		# Here we just emit; your scene script can find the HouseCell and call snap_to_cell.
 		print("Dragged to nothing")
+	print("Dragged %s " % drag)
 
 func get_residence() -> House:
 	return villager.residence
 	
 func get_house_cell() -> HouseCell:
 	return get_residence().get_cell()
+
+func dock_to(dock: Control):
+	# Move to dock control position (and parent bc of resizing and whatnot)
+	if dock == null:
+		print("Skipping dock %s to null" % self)
+		return
+	print("Before size %s (%s)" % [size, dock.size])
+	reparent(dock)
+	position = Vector2.ZERO
+	print("After size %s" % size)
 
 func _to_string() -> String:
 	return "VillagerToken(%s @ %s)" % [villager, get_residence()]

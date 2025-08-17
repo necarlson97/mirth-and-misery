@@ -46,3 +46,8 @@ static func weighted_index(weights: Array[float]) -> int:
 		if roll <= acc:
 			return i
 	return weights.size() - 1
+	
+static func defer_once(func_ref: Callable) -> void:
+	# Handy “wait one frame” to let containers finish layout
+	await Engine.get_main_loop().process_frame
+	func_ref.call()

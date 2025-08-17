@@ -10,6 +10,7 @@ class_name House
 extends RefCounted
 
 var cell_pos: Vector2i
+var cell: HouseCell
 var arrow: Vector2i # See direction.gd
 # var tags: Array[StringName] = []
 var resident: BaseVillager # villager that player told to start the round here
@@ -17,7 +18,6 @@ var visitors: Array[BaseVillager] = [] # villagers here this step
 # var contents: Array[BaseItem] = [] # Temp items
 
 var house_cell_prefab: PackedScene = preload("res://scenes/house_cell.tscn")
-
 
 # Keeps track of the cell_position for all houses (Vector2i -> House)
 static var cell_pos_to_house := {}
@@ -30,10 +30,11 @@ func _init(p: Vector2i):
 func get_cell() -> HouseCell:
 	# Like villager tokens, get the visual 'cell' that is a part of the grid,
 	# and is used for drag drop, visual effects, etc
-	var hc = house_cell_prefab.instantiate() as HouseCell
-	hc.house = self
-	hc.get_node("Label").text = "%s" % hc.get_cell_pos()
-	return hc
+	if cell != null: return cell
+	cell = house_cell_prefab.instantiate() as HouseCell
+	cell.house = self
+	cell.get_node("Label").text = "%s" % cell.get_cell_pos()
+	return cell
 
 func _to_string() -> String:
 	return "House(%s, arrow=%s, tags=[%s], n=%d)" % [
