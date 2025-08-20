@@ -6,8 +6,8 @@
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_d6gm5"]
 shader = ExtResource("1_omj2n")
-shader_parameter/outline_color = Color(0, 0, 0, 1)
-shader_parameter/outline_px = 10.0
+shader_parameter/outline_color = Color(0.94, 0.86856, 0.8272, 1)
+shader_parameter/outline_px = 5.0
 
 [node name="VillagerToken" type="Control"]
 custom_minimum_size = Vector2(60, 60)

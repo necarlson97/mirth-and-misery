@@ -44,10 +44,8 @@ func dock_to(dock: Control):
 	if dock == null:
 		print("Skipping dock %s to null" % self)
 		return
-	print("Before size %s (%s)" % [size, dock.size])
 	reparent(dock)
 	position = Vector2.ZERO
-	print("After size %s" % size)
 
 func _to_string() -> String:
 	return "VillagerToken(%s @ %s)" % [villager, get_residence()]

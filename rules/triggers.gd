@@ -50,7 +50,7 @@ class OnExit extends BaseTrigger:
 		return not ctx.grid.is_inside(ctx.to_pos)
 		
 	func default_hook() -> StringName:
-		return H.BeforeStep
+		return H.BeforeMove
 
 class Always extends BaseTrigger:
 

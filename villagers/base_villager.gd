@@ -77,6 +77,12 @@ func resettle(new_house: House):
 		token.dock_to(new_house.get_cell().dock)
 
 func _to_string() -> String:
-	return "Villager(%s)" % [
-		self.get_class() 
-	]
+	var s = get_script()
+	if s:
+		# If globally registered, this will be the class_name.
+		var g = s.get_global_name()
+		if g != "": return g
+		# Otherwise, fall back to the script file name.
+		if s.resource_path != "":
+			return s.resource_path.get_file().get_basename()
+	return get_class()

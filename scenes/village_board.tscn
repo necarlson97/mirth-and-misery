@@ -19,6 +19,16 @@ grow_vertical = 2
 script = ExtResource("1_stqms")
 grid_container = NodePath("TopAlign/HBoxContainer/AspectRatioContainer/MarginContainer/GridContainer")
 house_cell_prefab = ExtResource("3_w88ds")
+grid_size = null
+
+[node name="TokensOverlay" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
 
 [node name="TopAlign" type="VBoxContainer" parent="."]
 custom_minimum_size = Vector2(700, 0)
@@ -89,13 +99,23 @@ layout_mode = 2
 size_flags_vertical = 3
 alignment = 2
 
-[node name="DialCutoff" type="Control" parent="TopAlign/BottomAlign"]
+[node name="HBoxContainer" type="HBoxContainer" parent="TopAlign/BottomAlign"]
+layout_mode = 2
+alignment = 1
+
+[node name="Button2" type="Button" parent="TopAlign/BottomAlign/HBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 8
+text = "Other
+Button"
+
+[node name="DialCutoff" type="Control" parent="TopAlign/BottomAlign/HBoxContainer"]
 clip_contents = true
-custom_minimum_size = Vector2(0, 150)
+custom_minimum_size = Vector2(300, 150)
 layout_mode = 2
 size_flags_vertical = 10
 
-[node name="VBoxContainer" type="VBoxContainer" parent="TopAlign/BottomAlign/DialCutoff"]
+[node name="VBoxContainer" type="VBoxContainer" parent="TopAlign/BottomAlign/HBoxContainer/DialCutoff"]
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
@@ -105,14 +125,14 @@ grow_horizontal = 2
 grow_vertical = 2
 alignment = 2
 
-[node name="DialBG" type="TextureRect" parent="TopAlign/BottomAlign/DialCutoff/VBoxContainer"]
+[node name="DialBG" type="TextureRect" parent="TopAlign/BottomAlign/HBoxContainer/DialCutoff/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 texture = ExtResource("1_wuj63")
 expand_mode = 2
 stretch_mode = 5
 
-[node name="DialHand" type="TextureRect" parent="TopAlign/BottomAlign/DialCutoff/VBoxContainer/DialBG"]
+[node name="DialHand" type="TextureRect" parent="TopAlign/BottomAlign/HBoxContainer/DialCutoff/VBoxContainer/DialBG"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -125,11 +145,21 @@ texture = ExtResource("2_stqms")
 expand_mode = 2
 stretch_mode = 5
 
-[node name="TokensOverlay" type="Control" parent="."]
+[node name="Button" type="Button" parent="TopAlign/BottomAlign/HBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 8
+text = "Start
+Night"
+
+[node name="LogOutput" type="Label" parent="."]
 layout_mode = 1
-anchors_preset = 15
+anchors_preset = 11
+anchor_left = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-grow_horizontal = 2
+offset_left = -166.0
+grow_horizontal = 0
 grow_vertical = 2
-mouse_filter = 2
+text = "Test log output"
+
+[connection signal="pressed" from="TopAlign/BottomAlign/HBoxContainer/Button" to="." method="_on_button_pressed"]

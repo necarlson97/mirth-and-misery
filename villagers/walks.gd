@@ -28,7 +28,7 @@ class Orthogonal extends BaseWalk:
 			Vector2i(-1, 0),
 		]
 		var weights: Array[float] = [w_n, w_e, w_s, w_w]
-		var idx = grid.rng.weighted_index(weights)
+		var idx = Utils.weighted_index(weights)
 		return from_pos + dirs[idx]
 
 	func _to_string() -> String:

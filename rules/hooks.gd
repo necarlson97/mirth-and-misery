@@ -7,8 +7,8 @@ const H = {
 	NightEnd = &"NightEnd",
 
 	# Movement lifecycle (per step)
-	BeforeStep = &"BeforeMove", # about to step from A -> B (arrow-chosen)
-	AfterStep = &"AfterMove", # finished step to B
+	BeforeMove = &"BeforeMove", # about to step from A -> B (arrow-chosen)
+	AfterMove = &"AfterMove", # finished step to B
 	OnVisit = &"OnVisit", # entered a house B (fires after AfterMove)
 	
 	AttemptExit = &"AttemptExit", # movement would leave grid
