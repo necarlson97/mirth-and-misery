@@ -28,6 +28,7 @@ Ideas for villagers (or triggers or effects or w/e):
 	* Have different edges of the board (the swamp, the badlands, the deepwood, the ashlands)
 		and then characters that modify the house directions
 	* 'Bell ringing' as just an effect that global triggers other 
+	* Villager doesn't move, falls alseep in turn X
 	
 	* In the caravan shop, you can dismiss vilalgers by two methods:
 		one sells for crystal-tears, one sells for crystal-laughs,

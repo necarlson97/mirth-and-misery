@@ -1,27 +1,26 @@
 [gd_scene load_steps=8 format=3 uid="uid://2jbstdrqin0n"]
 
-[ext_resource type="Script" uid="uid://b3tgawdxgmte" path="res://scenes/village_board.gd" id="1_stqms"]
-[ext_resource type="Texture2D" uid="uid://c08ry8f60v3mn" path="res://assets/board/day dial.png" id="1_wuj63"]
-[ext_resource type="Texture2D" uid="uid://byqwnohgnh5e7" path="res://assets/board/day dial hand.png" id="2_stqms"]
-[ext_resource type="Texture2D" uid="uid://cvua76lho74os" path="res://assets/board/commandments bar.png" id="3_osqni"]
-[ext_resource type="PackedScene" uid="uid://dauwyf60xj4wy" path="res://scenes/house_cell.tscn" id="3_w88ds"]
-[ext_resource type="Texture2D" uid="uid://cxi1e4te32yk0" path="res://assets/board/grid.png" id="4_w88ds"]
+[ext_resource type="Script" uid="uid://b3tgawdxgmte" path="res://views/village_grid_view.gd" id="1_fj7nt"]
+[ext_resource type="PackedScene" uid="uid://dauwyf60xj4wy" path="res://views/house_view.tscn" id="2_avore"]
+[ext_resource type="Texture2D" uid="uid://cvua76lho74os" path="res://assets/board/commandments bar.png" id="3_ylrk4"]
+[ext_resource type="Texture2D" uid="uid://cxi1e4te32yk0" path="res://assets/board/grid.png" id="4_u46du"]
+[ext_resource type="Texture2D" uid="uid://c08ry8f60v3mn" path="res://assets/board/day dial.png" id="5_lj01x"]
+[ext_resource type="Texture2D" uid="uid://byqwnohgnh5e7" path="res://assets/board/day dial hand.png" id="6_c2q7j"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_yao1y"]
 
-[node name="VillageBoard" type="Control" node_paths=PackedStringArray("grid_container")]
+[node name="VillageGridView" type="Control" node_paths=PackedStringArray("grid_container")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_stqms")
+script = ExtResource("1_fj7nt")
 grid_container = NodePath("TopAlign/HBoxContainer/AspectRatioContainer/MarginContainer/GridContainer")
-house_cell_prefab = ExtResource("3_w88ds")
-grid_size = null
+house_cell_prefab = ExtResource("2_avore")
 
-[node name="TokensOverlay" type="Control" parent="."]
+[node name="ViewsOverlay" type="Control" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -48,7 +47,7 @@ theme_override_styles/panel = SubResource("StyleBoxEmpty_yao1y")
 
 [node name="TextureRect" type="TextureRect" parent="TopAlign/Commandments"]
 layout_mode = 2
-texture = ExtResource("3_osqni")
+texture = ExtResource("3_ylrk4")
 expand_mode = 5
 
 [node name="HBoxContainer" type="HBoxContainer" parent="TopAlign"]
@@ -68,18 +67,20 @@ ratio = 1.3333
 
 [node name="GridBG" type="TextureRect" parent="TopAlign/HBoxContainer/AspectRatioContainer"]
 layout_mode = 2
-texture = ExtResource("4_w88ds")
+texture = ExtResource("4_u46du")
 expand_mode = 1
 
 [node name="MarginContainer" type="MarginContainer" parent="TopAlign/HBoxContainer/AspectRatioContainer"]
 layout_mode = 2
-theme_override_constants/margin_left = 11
-theme_override_constants/margin_top = 11
-theme_override_constants/margin_right = 11
-theme_override_constants/margin_bottom = 11
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 12
 
 [node name="GridContainer" type="GridContainer" parent="TopAlign/HBoxContainer/AspectRatioContainer/MarginContainer"]
 layout_mode = 2
+theme_override_constants/h_separation = 0
+theme_override_constants/v_separation = 0
 columns = 4
 
 [node name="ProgressBar" type="ProgressBar" parent="TopAlign/HBoxContainer"]
@@ -106,6 +107,7 @@ alignment = 1
 [node name="Button2" type="Button" parent="TopAlign/BottomAlign/HBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 8
+mouse_default_cursor_shape = 2
 text = "Other
 Button"
 
@@ -128,7 +130,7 @@ alignment = 2
 [node name="DialBG" type="TextureRect" parent="TopAlign/BottomAlign/HBoxContainer/DialCutoff/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
-texture = ExtResource("1_wuj63")
+texture = ExtResource("5_lj01x")
 expand_mode = 2
 stretch_mode = 5
 
@@ -141,13 +143,14 @@ grow_horizontal = 2
 grow_vertical = 2
 pivot_offset = Vector2(300, 200)
 size_flags_vertical = 3
-texture = ExtResource("2_stqms")
+texture = ExtResource("6_c2q7j")
 expand_mode = 2
 stretch_mode = 5
 
 [node name="Button" type="Button" parent="TopAlign/BottomAlign/HBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 8
+mouse_default_cursor_shape = 2
 text = "Start
 Night"
 
@@ -157,7 +160,10 @@ anchors_preset = 11
 anchor_left = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -166.0
+offset_left = 115.0
+offset_top = -343.0
+offset_right = 281.0
+offset_bottom = -343.0
 grow_horizontal = 0
 grow_vertical = 2
 text = "Test log output"

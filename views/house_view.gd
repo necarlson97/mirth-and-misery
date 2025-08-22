@@ -1,21 +1,18 @@
+class_name HouseView
 extends Control
-class_name HouseCell
 
-## UI cell for a house in the grid. Accepts VillagerToken drops.
+## UI cell for a house in the grid. Accepts Villagerview drops.
 ## Emits resettle_villager so the model updates the resident.
 
 signal resettle_villager(villager, cell_pos: Vector2i)
 
-var house: House
+var house: HouseModel
 @onready var dock: Control = $Dock
-@onready var arrow: TextureRect = $VBoxContainer/Control/Arrow
+@onready var arrow: TextureRect = $Arrow
 
 func _ready():
 	mouse_filter = MOUSE_FILTER_STOP
-	mouse_default_cursor_shape = CURSOR_POINTING_HAND
 	assert(dock != null)
-	
-	update_direction()
 	
 	# Keep pivot centered whenever size changes (cell or icon).
 	_center_pivot(arrow)
@@ -23,6 +20,8 @@ func _ready():
 	arrow.resized.connect(func(): _center_pivot(arrow))
 
 	update_direction()
+	
+	$Label.text = "%s %s" % [get_cell_pos(), house.arrow]
 
 func _center_pivot(c: Control) -> void:
 	c.pivot_offset = c.size * 0.5
@@ -30,23 +29,23 @@ func _center_pivot(c: Control) -> void:
 func update_direction():
 	var dir := house.arrow
 	# Convert direction vector to radians (0 = right, +π/2 = down, -π/2 = up)
-	arrow.rotation = atan2(float(dir.y), float(dir.x))
+	arrow.rotation = atan2(float(-dir.y), float(dir.x))
 
 func _can_drop_data(_at_position: Vector2, data: Variant) -> bool:
-	# We accept ItemDrag payloads originating from a VillagerToken
-	#return data is ItemDrag and data.source is VillagerToken
+	# We accept ItemDrag payloads originating from a Villagerview
+	#return data is ItemDrag and data.source is Villagerview
 	# TODO
 	return true
 
 func _drop_data(_at_position: Vector2, data: Variant) -> void:
 	var drag := data as ItemDrag
-	var token: VillagerToken = drag.source
+	var view: VillagerView = drag.source
 
-	# Mark accepted so the token doesn't snap back in its completion handler
+	# Mark accepted so the view doesn't snap back in its completion handler
 	drag.destination = self
 
-	# Update token's logical cell and tell the game state
-	token.villager.resettle(house)
+	# Update view's logical cell and tell the game state
+	view.villager.resettle(house)
 
 func get_cell_pos() -> Vector2i:
 	return house.cell_pos

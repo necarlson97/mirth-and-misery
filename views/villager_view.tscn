@@ -1,0 +1,51 @@
+[gd_scene load_steps=7 format=3 uid="uid://sr5g0ojd7tup"]
+
+[ext_resource type="Script" uid="uid://cptkjhi162xg4" path="res://views/villager_view.gd" id="1_3aad1"]
+[ext_resource type="Shader" uid="uid://ct5ymtpumiee3" path="res://assets/shaders/outline.gdshader" id="2_upvdj"]
+[ext_resource type="Texture2D" uid="uid://di7aen87jomnd" path="res://assets/villagers/klobly.png" id="3_k4saf"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_3aad1"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_upvdj"]
+generate_mipmaps = false
+seamless = true
+noise = SubResource("FastNoiseLite_3aad1")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_d6gm5"]
+shader = ExtResource("2_upvdj")
+shader_parameter/outline_color = Color(0.13, 0.12012, 0.1144, 1)
+shader_parameter/outline_px = 4.0
+shader_parameter/noise_tex = SubResource("NoiseTexture2D_upvdj")
+shader_parameter/noise_scale_px = 500.0
+shader_parameter/noise_amp_px = 3.0
+shader_parameter/noise_scroll_px = Vector2(30, -20)
+shader_parameter/noise_power = 0.0
+shader_parameter/only_grow = true
+shader_parameter/debug_show_noise = false
+
+[node name="VillagerView" type="Control"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_3aad1")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+material = SubResource("ShaderMaterial_d6gm5")
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.0434028
+anchor_top = -0.0910494
+anchor_right = 0.956597
+anchor_bottom = 0.908951
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_k4saf")
+expand_mode = 3
+stretch_mode = 5
+metadata/_edit_use_anchors_ = true

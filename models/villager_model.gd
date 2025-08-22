@@ -1,19 +1,21 @@
 ## base_villager.gd
 ## Villager = the actor: tags + movement + rules + currency + life state.
 ## This is a pure data/logic object; the UI will later mirror it with a Node.
-class_name BaseVillager
-extends RefCounted
+class_name VillagerModel
+extends Resource
 
-var id: StringName
-var name: String = ""
 var tags: Array[StringName] = []
-var movement: Walks.BaseWalk
-var rules: Array[BaseRule] = []
-var is_sleeping: bool = false
-var residence: House
 
-var villager_token_prefab: PackedScene = preload("res://scenes/villager_token.tscn")
-var token: VillagerToken
+var movement: Walks.BaseWalk
+var rules: Array[RuleModel] = []
+
+var residence: HouseModel
+
+var villager_view_prefab: PackedScene = preload("res://views/villager_view.tscn")
+var view: VillagerView
+
+var is_sleeping: bool = false
+var is_dead: bool = false
 
 # TODO how exactly do we want to handle tears/laughter?
 # Perhaps:
@@ -28,16 +30,22 @@ var token: VillagerToken
 var tears: int = 0
 var laughter: int = 0
 
-func _init(_id: StringName):
-	id = _id
+func round_start_refresh():
+	is_sleeping = false
+	tears = 0
+	laughter = 0
+	
+	for r in rules:
+		r.trigger.round_start_refresh()
+	# TODO when do we remove dead?
 
 func has_any_tag(want: Array[StringName]) -> bool:
 	return want.any(func(t): return t in tags)
 
-func on_hook(hook: StringName, ctx) -> void:
+func on_hook(ctx) -> void:
 	# Dispatch all rules bound to this hook.
 	for r in rules:
-		r.try_apply(hook, ctx)
+		r.try_apply(ctx)
 
 func add_tears(n: int, ctx) -> void:
 	# Hook allows global modifiers to step in later if we introduce them.
@@ -48,23 +56,30 @@ func add_laughter(n: int, ctx) -> void:
 
 func mark_sleep(reason: String = "") -> void:
 	is_sleeping = true
-	# For now we only flag; the simulator decides how to remove from board.
-
-func get_token() -> VillagerToken:
-	# Return (and create if needed) a villager token to represent this
-	# villager on the board (handles frontend stuff like drag/drop and whatnot)
-	if token != null:
-		return token
+	print("Sleeping %s: '%s'"%[self, reason])
 	
-	token = villager_token_prefab.instantiate() as VillagerToken
-	token.villager = self
-	if residence:
-		token.dock_to(residence.get_cell().dock)
-	return token
+func mark_dead(reason: String = "") -> void:
+	is_dead = true
+	print("Killing %s: '%s'"%[self, reason])
 
-func resettle(new_house: House):
+func is_inactive() -> bool:
+	return is_sleeping or is_dead
+
+func get_view() -> VillagerView:
+	# Return (and create if needed) a villager view to represent this
+	# villager on the board (handles frontend stuff like drag/drop and whatnot)
+	if view != null:
+		return view
+	
+	view = villager_view_prefab.instantiate() as VillagerView
+	view.villager = self
+	if residence:
+		view.dock_to(residence.get_cell().dock)
+	return view
+
+func resettle(new_house: HouseModel):
 	# Set this villager to a new residence,
-	# updating their token and whatnot as needed
+	# updating their view and whatnot as needed
 	if residence != null:
 		assert(residence.resident == self, "My link to previous residence is broken")
 		residence.resident = null
@@ -73,8 +88,13 @@ func resettle(new_house: House):
 	new_house.resident = self
 	
 	residence = new_house
-	if token:
-		token.dock_to(new_house.get_cell().dock)
+	if view:
+		view.dock_to(new_house.get_view().dock)
+
+func walk_to(new_house: HouseModel):
+	# TODO lerp to
+	if view and new_house and new_house.view:
+		view.dock_to(new_house.get_view().dock)
 
 func _to_string() -> String:
 	var s = get_script()

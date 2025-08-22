@@ -1,5 +1,5 @@
 class_name Klobly
-extends BaseVillager
+extends VillagerModel
 
 const T = Tags.T
 
@@ -11,12 +11,12 @@ func _init():
 	movement = Walks.Orthogonal.new(0.5, 0, 0.5, 0)
 
 	rules = [
-		Rules.Sleep.new(Triggers.OnMeet.new(T.WARRIOR)),
-		Rules.Sleep.new(Triggers.OnVisit.new(T.DEVIL)),
-		Rules.Sleep.new(Triggers.OnExit.new()),
+		Rules.Sleep.new(self, Triggers.OnMeet.new(T.WARRIOR)),
+		Rules.Sleep.new(self, Triggers.OnVisit.new(T.DEVIL)),
+		Rules.Sleep.new(self, Triggers.OnExit.new()),
 
-		Rules.Tears.new(Triggers.OnMeet.new(T.HUMAN), 1),
-		Rules.Laughs.new(Triggers.OnVisit.new(T.GOBLIN), 2),
+		Rules.Tears.new(self, Triggers.OnMeet.new(T.HUMAN), 1),
+		Rules.Laughs.new(self, Triggers.OnVisit.new(T.GOBLIN), 2),
 	]
 
 func after_move(house_from, house_to):

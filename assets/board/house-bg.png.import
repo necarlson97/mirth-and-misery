@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://tbgbmub4vkv1"
-path="res://.godot/imported/wanda witch.png-94f31ebd1f15f27c23e505b8d04b223c.ctex"
+uid="uid://cseimjfsamqme"
+path="res://.godot/imported/house-bg.png-4167f9a6e153a212ed499d969779f40a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/villagers/wanda witch.png"
-dest_files=["res://.godot/imported/wanda witch.png-94f31ebd1f15f27c23e505b8d04b223c.ctex"]
+source_file="res://assets/board/house-bg.png"
+dest_files=["res://.godot/imported/house-bg.png-4167f9a6e153a212ed499d969779f40a.ctex"]
 
 [params]
 

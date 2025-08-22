@@ -1,0 +1,80 @@
+[gd_scene load_steps=4 format=3 uid="uid://dauwyf60xj4wy"]
+
+[ext_resource type="Script" uid="uid://d3ilvh6nqitp7" path="res://views/house_view.gd" id="1_afvso"]
+[ext_resource type="Texture2D" uid="uid://b2h3gt6jhkhw2" path="res://assets/board/house.png" id="2_348eq"]
+[ext_resource type="Texture2D" uid="uid://cseimjfsamqme" path="res://assets/board/house-bg.png" id="2_afvso"]
+
+[node name="HouseView" type="Control"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 3
+anchor_right = 0.052
+anchor_bottom = 0.093
+offset_right = 0.0960007
+offset_bottom = -0.264
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_afvso")
+
+[node name="Arrow" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = 1.5708
+pivot_offset = Vector2(30, 30)
+size_flags_vertical = 3
+texture = ExtResource("2_afvso")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="HouseIcon" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.166667
+anchor_top = 0.166667
+anchor_right = 0.833333
+anchor_bottom = 0.833333
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+texture = ExtResource("2_348eq")
+expand_mode = 1
+stretch_mode = 5
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.05
+anchor_top = 0.75
+anchor_right = 0.441667
+anchor_bottom = 0.983333
+offset_right = 23.5
+offset_bottom = 14.0
+grow_vertical = 0
+scale = Vector2(0.5, 0.5)
+size_flags_horizontal = 4
+size_flags_vertical = 8
+mouse_filter = 1
+theme_override_colors/font_color = Color(0, 0, 0, 0.67451)
+theme_override_font_sizes/font_size = 20
+text = "(0, 1)"
+horizontal_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Dock" type="Control" parent="."]
+layout_mode = 1
+anchor_left = 0.0833333
+anchor_top = 0.0833333
+anchor_right = 0.916667
+anchor_bottom = 0.916667
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+metadata/_edit_use_anchors_ = true

@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://bjpwd1uvrwy6p"]
-
-[ext_resource type="Script" uid="uid://b3tgawdxgmte" path="res://scenes/mvp.gd" id="1_oajtv"]
-
-[node name="mvp" type="Node2D"]
-script = ExtResource("1_oajtv")

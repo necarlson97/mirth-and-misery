@@ -6,34 +6,33 @@
 ## 	then they 'visit' it for that single step (and 'meet' the other visitors there)
 ## * contents = temporary items that get dropped there during the night be a
 ## visitng villager or commandment or w/e 
-class_name House
-extends RefCounted
+class_name HouseModel
+extends Resource
 
 var cell_pos: Vector2i
-var cell: HouseCell
+var view: HouseView
 var arrow: Vector2i # See direction.gd
 # var tags: Array[StringName] = []
-var resident: BaseVillager # villager that player told to start the round here
-var visitors: Array[BaseVillager] = [] # villagers here this step
+var resident: VillagerModel # villager that player told to start the round here
+var visitors: Array[VillagerModel] = [] # villagers here this step
 # var contents: Array[BaseItem] = [] # Temp items
 
-var grid: VillageGrid
+var grid: VillageGridModel
 
-var house_cell_prefab: PackedScene = preload("res://scenes/house_cell.tscn")
+var house_view_prefab: PackedScene = preload("res://views/house_view.tscn")
 
-func _init(village_grid: VillageGrid, p: Vector2i):
+func _init(village_grid: VillageGridModel, p: Vector2i):
 	grid = village_grid
 	cell_pos = p
 	arrow = Direction.rand()
 
-func get_cell() -> HouseCell:
-	# Like villager tokens, get the visual 'cell' that is a part of the grid,
+func get_view() -> HouseView:
+	# Like villager views, get the visual 'cell' that is a part of the grid,
 	# and is used for drag drop, visual effects, etc
-	if cell != null: return cell
-	cell = house_cell_prefab.instantiate() as HouseCell
-	cell.house = self
-	cell.get_node("Label").text = "%s" % cell.get_cell_pos()
-	return cell
+	if view != null: return view
+	view = house_view_prefab.instantiate() as HouseView
+	view.house = self
+	return view
 
 func _to_string() -> String:
 	return "House(%s, arrow=%s, tags=[%s], n=%d)" % [

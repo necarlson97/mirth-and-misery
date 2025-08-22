@@ -1,6 +1,8 @@
 ## Hook names are the *contract* between the simulator and Rules.
 ## A hook = a named moment in the night flow where rules may run.
 ## We use StringName for fast comparisons.
+
+# TODO but shouldn't we use Enum instead?
 class_name Hooks
 const H = {
 	NightStart = &"NightStart",

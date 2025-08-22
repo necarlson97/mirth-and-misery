@@ -9,6 +9,20 @@ class BaseWalk:
 		push_error("MovementProfile.choose_next not implemented")
 		return from_pos
 
+class Stationary extends BaseWalk:
+	func choose_next(from_pos: Vector2i, grid: VillageGridModel) -> Vector2i:
+		return from_pos
+
+	func _to_string() -> String:
+		return "Stationary"
+
+class Arrows extends BaseWalk:
+	func choose_next(from_pos: Vector2i, grid: VillageGridModel) -> Vector2i:
+		return from_pos - grid.get_at(from_pos).arrow
+
+	func _to_string() -> String:
+		return "Follow Arrows"
+
 class Orthogonal extends BaseWalk:
 	## Choose among N/E/S/W with given weights (0..1).
 	## Unnormalized is fine; we normalize.

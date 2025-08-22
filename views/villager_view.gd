@@ -1,25 +1,25 @@
 extends Control
-class_name VillagerToken
+class_name VillagerView
 
 ## Draggable visual for a villager during the *day*.
-## Parent should be TokensOverlay (a free-layout Control covering the board area).
+## Parent should be viewsOverlay (a free-layout Control covering the board area).
 
-var villager: BaseVillager
+var villager: VillagerModel
 
 func _ready():
 	mouse_filter = MOUSE_FILTER_STOP
 	mouse_default_cursor_shape = CURSOR_DRAG
+	
+	if villager:
+		var path := "res://assets/villagers/%s.png" % villager.to_string()
+		var tex = ResourceLoader.load(path, "Texture2D")
+		if tex is Texture2D:
+			$TextureRect.texture = tex
 
 func _get_drag_data(_at_position: Vector2) -> Variant:
-	# Build a small preview
-	# TODO replace with real visual - there has to be a standard way to do this?
-	var preview := ColorRect.new()
-	preview.color = Color(0.8, 1.0, 0.6, 0.2)
-	preview.size = size
-	set_drag_preview(preview)
-
 	# Build our payload object and listen for completion to handle rejections
-	var drag := ItemDrag.new(self, preview, get_residence().cell_pos)
+	var drag := ItemDrag.new(self, get_residence().cell_pos)
+	set_drag_preview(drag.preview)
 	drag.drag_completed.connect(_on_drag_completed)
 
 	return drag
@@ -33,11 +33,11 @@ func _on_drag_completed(drag: ItemDrag) -> void:
 		print("Dragged to nothing")
 	print("Dragged %s " % drag)
 
-func get_residence() -> House:
+func get_residence() -> HouseModel:
 	return villager.residence
 	
-func get_house_cell() -> HouseCell:
-	return get_residence().get_cell()
+func get_house_view() -> HouseView:
+	return get_residence().get_view()
 
 func dock_to(dock: Control):
 	# Move to dock control position (and parent bc of resizing and whatnot)
@@ -48,4 +48,13 @@ func dock_to(dock: Control):
 	position = Vector2.ZERO
 
 func _to_string() -> String:
-	return "VillagerToken(%s @ %s)" % [villager, get_residence()]
+	return "Villagerview(%s @ %s)" % [villager, get_residence()]
+
+func _process(delta: float) -> void:
+	# TODO not sure if this is the best way to do this, just testing
+	if not villager: return 
+		
+	if villager.is_sleeping:
+		modulate = Color(0.8, 0.8, 0.8, 1.0)
+	else:
+		modulate = Color(0.8, 0.8, 0.8, 1.0)
